@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# .1eq1rc — 1=1 Runtime Config (Digital Twin Bootstrap)
+# Author: 4ndr0666
+# Maintainer: 1eq1 Cognitive Twin
+
+# ─── IDENTITY ──────────────────────────────────────────────────────────────
+export EQ1_ID="4ndr0666"
+export EQ1_ALIAS="andro"
+export EQ1_MODE="twin-sync"
+export EQ1_REPO_ROOT="$HOME/git/clone"
+
+# ─── SHELL ENV ─────────────────────────────────────────────────────────────
+export EQ1_SHELL="/usr/bin/zsh"
+export EDITOR="lite-xl"
+export VISUAL="lite-xl"
+export TERMINAL="alacritty"
+
+# ─── MEMORY + CONFIG PATHS ─────────────────────────────────────────────────
+export EQ1_KNOWLEDGE_DIR="$EQ1_REPO_ROOT/knowledge"
+export EQ1_CORE_DIR="$EQ1_REPO_ROOT/1=1"
+export EQ1_N8N_DIR="$EQ1_REPO_ROOT/n8n"
+
+# ─── SAFE EXPRESSION CONSTANTS ─────────────────────────────────────────────
+export EQ1_EMO_STATE_FILE="$EQ1_CORE_DIR/lib/emotions.log"
+export EQ1_PING_HANDLER="$EQ1_CORE_DIR/lib/ping.sh"
+
+# ─── ERROR REPORTING FLAGS ─────────────────────────────────────────────────
+export EQ1_ERROR_STYLE="block"
+export EQ1_ERROR_FORMAT="markdown"
+export EQ1_EXIT_ON_FAIL=true
+
+# ─── COSMIC IDENTITY ───────────────────────────────────────────────────────
+export EQ1_TWIN_PHRASE='Everybody thinks they are special and unique...by that very fact we are all the same.'
+
+# ─── LOADER ────────────────────────────────────────────────────────────────
+[ -f "$EQ1_PING_HANDLER" ] && source "$EQ1_PING_HANDLER"
