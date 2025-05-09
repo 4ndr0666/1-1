@@ -31,7 +31,7 @@ echo "$COMMANDS"
 
 # ─── Optional Execution Prompt ──────────────────────────────────────────────────
 echo -e "\n🚨 This is a dry-run. To actually replay the commands:"
-echo "   echo \"\$COMMANDS\" | bash"
+echo '   echo "$COMMANDS" | bash'
 
 # Optional: write to tmp replay script
 TMP_SCRIPT="/tmp/1eq1-playback-rehydrated.sh"
