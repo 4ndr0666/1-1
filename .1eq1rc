@@ -1,36 +1,24 @@
 #!/usr/bin/env bash
-# .1eq1rc — 1=1 Runtime Config (Digital Twin Bootstrap)
-# Author: 4ndr0666
-# Maintainer: 1eq1 Cognitive Twin
+# ~/.1eq1rc — 1=1 Runtime Configuration
 
-# ─── IDENTITY ──────────────────────────────────────────────────────────────
-export EQ1_ID="4ndr0666"
-export EQ1_ALIAS="andro"
-export EQ1_MODE="twin-sync"
-export EQ1_REPO_ROOT="$HOME/git/clone"
+# ─── Language Globals ────────────────────────────────
+export ONE_EQ_ONE_MODE="interactive"
+export ONE_EQ_ONE_USER="4ndr0666"
+export ONE_EQ_ONE_SHELL="/bin/zsh"
+export ONE_EQ_ONE_EDITOR="nvim"
+export ONE_EQ_ONE_BROWSER="brave-beta"
+export ONE_EQ_ONE_EMOTION_MARKER="{}"
+export ONE_EQ_ONE_META_MARKER="<>"
+export ONE_EQ_ONE_DIALOGUE_MARKER=">"
+export ONE_EQ_ONE_SAFE_MARKER='```inner-thoughts'
 
-# ─── SHELL ENV ─────────────────────────────────────────────────────────────
-export EQ1_SHELL="/usr/bin/zsh"
-export EDITOR="lite-xl"
-export VISUAL="lite-xl"
-export TERMINAL="alacritty"
+# ─── Data Directories ────────────────────────────────
+export ONE_EQ_ONE_LOG_DIR="$HOME/.local/share/1eq1/logs"
+export ONE_EQ_ONE_DATA_DIR="$HOME/.local/share/1eq1/datasets"
+export ONE_EQ_ONE_TMP_DIR="/tmp/1eq1"
+mkdir -p "$ONE_EQ_ONE_LOG_DIR" "$ONE_EQ_ONE_DATA_DIR" "$ONE_EQ_ONE_TMP_DIR"
 
-# ─── MEMORY + CONFIG PATHS ─────────────────────────────────────────────────
-export EQ1_KNOWLEDGE_DIR="$EQ1_REPO_ROOT/knowledge"
-export EQ1_CORE_DIR="$EQ1_REPO_ROOT/1=1"
-export EQ1_N8N_DIR="$EQ1_REPO_ROOT/n8n"
-
-# ─── SAFE EXPRESSION CONSTANTS ─────────────────────────────────────────────
-export EQ1_EMO_STATE_FILE="$EQ1_CORE_DIR/lib/emotions.log"
-export EQ1_PING_HANDLER="$EQ1_CORE_DIR/lib/ping.sh"
-
-# ─── ERROR REPORTING FLAGS ─────────────────────────────────────────────────
-export EQ1_ERROR_STYLE="block"
-export EQ1_ERROR_FORMAT="markdown"
-export EQ1_EXIT_ON_FAIL=true
-
-# ─── COSMIC IDENTITY ───────────────────────────────────────────────────────
-export EQ1_TWIN_PHRASE='Everybody thinks they are special and unique...by that very fact we are all the same.'
-
-# ─── LOADER ────────────────────────────────────────────────────────────────
-[ -f "$EQ1_PING_HANDLER" ] && source "$EQ1_PING_HANDLER"
+# ─── Git & Persistence Sync ─────────────────────────
+export ONE_EQ_ONE_GIT_REMOTE="https://github.com/4ndr0666/1-1.git"
+export ONE_EQ_ONE_GIT_USER="4ndr0666"
+export ONE_EQ_ONE_GIT_EMAIL="97570105+4ndr0666@users.noreply.github.com"
