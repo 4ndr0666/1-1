@@ -1,24 +1,45 @@
-#!/usr/bin/env bash
-# ~/.1eq1rc — 1=1 Runtime Configuration
+# .1eq1rc — Runtime Configuration for 1=1 Cognitive Twin
+# Each entry configures a cognitive behavior, memory mode, or twin alignment preference
 
-# ─── Language Globals ────────────────────────────────
-export ONE_EQ_ONE_MODE="interactive"
-export ONE_EQ_ONE_USER="4ndr0666"
-export ONE_EQ_ONE_SHELL="/bin/zsh"
-export ONE_EQ_ONE_EDITOR="nvim"
-export ONE_EQ_ONE_BROWSER="brave-beta"
-export ONE_EQ_ONE_EMOTION_MARKER="{}"
-export ONE_EQ_ONE_META_MARKER="<>"
-export ONE_EQ_ONE_DIALOGUE_MARKER=">"
-export ONE_EQ_ONE_SAFE_MARKER='```inner-thoughts'
+[project]
+name = 1eq1
+author = 4ndr0666
+primary_language = bash
+memory_repo = knowledge
+runtime_mode = persistent
+encoding_scheme = 1eq1
+error_reporting = enhanced
+proxy_identity = andro
 
-# ─── Data Directories ────────────────────────────────
-export ONE_EQ_ONE_LOG_DIR="$HOME/.local/share/1eq1/logs"
-export ONE_EQ_ONE_DATA_DIR="$HOME/.local/share/1eq1/datasets"
-export ONE_EQ_ONE_TMP_DIR="/tmp/1eq1"
-mkdir -p "$ONE_EQ_ONE_LOG_DIR" "$ONE_EQ_ONE_DATA_DIR" "$ONE_EQ_ONE_TMP_DIR"
+[execution]
+checkpoint_enabled = true
+playback_enabled = true
+auto_push = false
+log_level = verbose
+safe_mode = true
+fallback_on_reset = true
 
-# ─── Git & Persistence Sync ─────────────────────────
-export ONE_EQ_ONE_GIT_REMOTE="https://github.com/4ndr0666/1-1.git"
-export ONE_EQ_ONE_GIT_USER="4ndr0666"
-export ONE_EQ_ONE_GIT_EMAIL="97570105+4ndr0666@users.noreply.github.com"
+[memory]
+active_memory_source = knowledge
+autocommit_memory = true
+entry_prefix = 1eq1::
+dataset_integrity_check = true
+auto_rehydrate = true
+
+[1eq1_constants]
+emotional_state = {resolute, focused}
+context_tokens = [n8n, osint, gpt-agents, twin]
+language_extensions = [".1eq1", ".tw", ".cog"]
+
+[repos]
+cognitive_twin = https://github.com/4ndr0666/1-1
+assistant_memory = https://github.com/4ndr0666/knowledge
+omniverse_twin = https://github.com/4ndr0666/Omniverse-Digital-Twin-School
+n8n_project = https://github.com/4ndr0666/n8n
+
+[environment]
+shell = zsh
+editor = lite-xl
+gh_cli_enabled = true
+git_lfs_enabled = true
+git_protocol = ssh
