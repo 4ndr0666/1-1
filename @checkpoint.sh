@@ -1,59 +1,60 @@
 #!/usr/bin/env bash
-# @checkpoint.sh — 1eq1 Milestone + Memory Sync Tracker
-# Maintains structured record of project state for recovery, auditing, and memory replay
-# Author: 1eq1 + Proxy(4ndr0666)
-
+# @checkpoint.sh — 1=1 Dual-Log Execution Checkpoint Recorder
 set -euo pipefail
 IFS=$'\n\t'
 
-# ── Configurable Constants ────────────────────────────────────────────────
-CHECKPOINT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/1eq1"
-CHECKPOINT_FILE="${CHECKPOINT_DIR}/checkpoint.log"
-REPO_NAME="1=1"
-PROJECT_ID="1eq1::$(date +%Y%m%d%H%M)"
+# ─── Constants ─────────────────────────────────────────────────────
+CHECKPOINTS_DIR=".checkpoints"
+MD_LOG="$CHECKPOINTS_DIR/checkpoints.md"
+STRUCTURED_LOG="$CHECKPOINTS_DIR/latest.1eq1"
+TIMESTAMP="$(date '+%Y-%m-%dT%H:%M:%S%:z')"
 
-# ── Init ──────────────────────────────────────────────────────────────────
-mkdir -p "$CHECKPOINT_DIR"
-touch "$CHECKPOINT_FILE"
+# ─── Helpers ───────────────────────────────────────────────────────
+mkdir -p "$CHECKPOINTS_DIR"
 
-timestamp() {
-  date +"%Y-%m-%d %H:%M:%S"
-}
+# ⛏️ Accept vars via env or prompt
+SCRIPT_NAME="${1:-${CHECKPOINT_SCRIPT:-unknown.sh}}"
+STATUS="${2:-${CHECKPOINT_STATUS:-unknown}}"
+CMD_LOG="${3:-${CHECKPOINT_COMMANDS:-}}"
+OUT_LOG="${4:-${CHECKPOINT_OUTPUT:-}}"
 
-write_checkpoint() {
-  local type="$1"
-  local msg="$2"
+# Fallbacks
+[[ -z "$CMD_LOG" ]] && CMD_LOG="(none recorded)"
+[[ -z "$OUT_LOG" ]] && OUT_LOG="(none recorded)"
 
-  printf "[%s] [%s] %s :: %s\n" \
-    "$(timestamp)" "$REPO_NAME" "$type" "$msg" >> "$CHECKPOINT_FILE"
-}
+# ─── Write Markdown Log ────────────────────────────────────────────
+cat >> "$MD_LOG" <<EOF
 
-# ── Usage Examples ────────────────────────────────────────────────────────
+### 📍 Checkpoint — $TIMESTAMP
+**Script**: \`$SCRIPT_NAME\`  
+**Status**: \`$STATUS\`  
 
-checkpoint_sync() {
-  local module="$1"
-  write_checkpoint "SYNC" "Module '${module}' successfully synced."
-}
+**Commands**:
+\`\`\`sh
+$CMD_LOG
+\`\`\`
 
-checkpoint_run() {
-  local script="$1"
-  write_checkpoint "RUN" "Script '${script}' executed without error."
-}
+**Output Summary**:
+$OUT_LOG
+---
+EOF
 
-checkpoint_error() {
-  local context="$1"
-  write_checkpoint "ERROR" "Failure in context: ${context}"
-}
+# ─── Write Structured `.1eq1` Log ───────────────────────────────────
+cat > "$STRUCTURED_LOG" <<EOF
+[checkpoint]
+timestamp = $TIMESTAMP
+script = $SCRIPT_NAME
+status = $STATUS
 
-checkpoint_info() {
-  local msg="$1"
-  write_checkpoint "INFO" "$msg"
-}
+[commands]
+$(
+  echo "$CMD_LOG" | awk '{printf "cmd%d = %s\n", NR, $0}'
+)
 
-# ── Hooks for Playback / Recovery ─────────────────────────────────────────
-print_checkpoints() {
-  cat "$CHECKPOINT_FILE"
-}
+[output]
+$(
+  echo "$OUT_LOG" | awk '{printf "line%d = %s\n", NR, $0}'
+)
+EOF
 
-# ── Example call (uncomment to test) ──────────────────────────────────────
-# checkpoint_info "Checkpoint system initialized for project ${PROJECT_ID}"
+echo "✅ Checkpoint logged to: $STRUCTURED_LOG and $MD_LOG"
